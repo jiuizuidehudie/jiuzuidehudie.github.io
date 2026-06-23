@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>East Meets West: A Journey Through Wedding Traditions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --white: #FFFFFF;
+            --ivory: #FFF8F0;
+            --cream: #FDF5E6;
+            --rose: #FFE4E1;
+            --red: #C41E3A;
+            --dark-red: #8B0000;
+            --gold: #D4AF37;
+            --soft-gold: #F0E68C;
+            --gray: #666666;
+            --dark: #2C2C2C;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            background: var(--ivory);
+            overflow-x: hidden;
+        }
+
+        /* 飘飘然粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: rgba(196, 30, 58, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .particle:nth-child(odd) {
+            background: rgba(212, 175, 55, 0.3);
+            width: 4px; height: 4px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* 幻灯片容器 */
+        .slide {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* 封面 */
+        .cover {
+            background: linear-gradient(135deg, var(--ivory) 0%, var(--rose) 50%, var(--white) 100%);
+            text-align: center;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c41e3a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cover h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--dark-red);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cover .subtitle {
+            font-size: 1.8rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 30px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .cover .chinese-title {
+            font-size: 2.5rem;
+            color: var(--red);
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .cover .divider {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 30px auto;
+        }
+
+        .cover .date {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-top: 40px;
+        }
+
+        /* 通用幻灯片样式 */
+        .slide-title {
+            font-size: 2.8rem;
+            color: var(--dark-red);
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .slide-subtitle {
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 50px;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* 西方婚礼页面 */
+        .western-slide {
+            background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
+        }
+
+        .western-slide .slide-title { color: #1a1a2e; }
+
+        /* 中式婚礼页面 */
+        .chinese-slide {
+            background: linear-gradient(180deg, var(--rose) 0%, #FFF0F0 100%);
+        }
+
+        .chinese-slide .slide-title { color: var(--dark-red); }
+
+        /* 对比页面 */
+        .compare-slide {
+            background: linear-gradient(135deg, var(--white) 0%, var(--ivory) 50%, var(--rose) 100%);
+        }
+
+        /* 内容区域 */
+        .content-box {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212,175,55,0.2);
+        }
+
+        /* 双语文本样式 */
+        .bilingual-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid var(--gold);
+            background: linear-gradient(90deg, rgba(212,175,55,0.05) 0%, transparent 100%);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .english-text {
+            font-size: 1.15rem;
+            color: var(--dark);
+            line-height: 1.8;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 8px;
+        }
+
+        .chinese-text {
+            font-size: 1.05rem;
+            color: var(--gray);
+            line-height: 1.8;
+            font-family: 'Noto Serif SC', serif;
+            padding-left: 20px;
+            border-left: 2px solid var(--rose);
+        }
+
+        /* 视频占位区 */
+        .video-placeholder {
+            width: 100%;
+            max-width: 700px;
+            height: 400px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+            border: 3px dashed var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 80px; height: 80px;
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .video-placeholder::after {
+            content: '▶';
+            font-size: 3rem;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+
+        .video-label {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* 对比表格 */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .compare-table th {
+            background: linear-gradient(135deg, var(--dark-red), var(--red));
+            color: white;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .compare-table th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        .compare-table th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        .compare-table td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) {
+            background: rgba(255,228,225,0.3);
+        }
+
+        .compare-table tr:nth-child(odd) {
+            background: rgba(255,255,255,0.8);
+        }
+
+        .compare-table .aspect {
+            font-weight: 700;
+            color: var(--dark-red);
+            font-size: 1.1rem;
+        }
+
+        .compare-table .western-col {
+            color: #1a1a2e;
+            border-left: 3px solid #1a1a2e;
+        }
+
+        .compare-table .chinese-col {
+            color: var(--dark-red);
+            border-left: 3px solid var(--dark-red);
+        }
+
+        /* 关键词页面 */
+        .keywords-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .keyword-card {
+            background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .keyword-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+        }
+
+        .keyword-en {
+            font-size: 1.4rem;
+            color: var(--dark-red);
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .keyword-cn {
+            font-size: 1.1rem;
+            color: var(--gray);
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .keyword-phonetic {
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-top: 5px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* 装饰元素 */
+        .ornament {
+            font-size: 2rem;
+            color: var(--gold);
+            text-align: center;
+            margin: 20px 0;
+            opacity: 0.6;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            color: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* 页脚 */
+        .slide-footer {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        /* 导航提示 */
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(196,30,58,0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 100;
+        }
+
+        /* 打印样式 */
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: 100vh;
+            }
+            .particles, .nav-hint { display: none; }
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .slide { padding: 30px 20px; }
+            .cover h1 { font-size: 2.5rem; }
+            .slide-title { font-size: 2rem; }
+            .content-box { padding: 25px; }
+            .keywords-grid { grid-template-columns: 1fr; }
+            .compare-table { font-size: 0.9rem; }
+            .compare-table td { padding: 12px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- 飘飘然粒子效果 -->
+<div class="particles" id="particles"></div>
+
+<!-- ========== SLIDE 1: 封面 ========== -->
+<div class="slide cover">
+    <div class="cover-content">
+        <div class="ornament">❦ ❦ ❦</div>
+        <h1>East Meets West</h1>
+        <p class="subtitle">A Journey Through Wedding Traditions</p>
+        <div class="divider"></div>
+        <p class="chinese-title">中西婚礼文化之旅</p>
+        <p class="date" style="margin-top: 40px; color: var(--gray);">When Two Worlds Unite in Love</p>
+        <p class="date" style="font-size: 1rem; margin-top: 10px;">当两个世界在爱中相遇</p>
+    </div>
+</div>
+
+<!-- ========== SLIDE 2: 目录 ========== -->
+<div class="slide compare-slide">
+    <div class="content-box">
+        <h2 class="slide-title">Table of Contents</h2>
+        <p class="slide-subtitle">Contents Overview</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">1. Western Wedding Vows & Traditions — The Sacred Promise Before God</p>
+            <p class="chinese-text">一、西方婚礼誓言与传统 —— 上帝面前的庄严承诺</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">2. Chinese Wedding Vows & Traditions — The Covenant Under Heaven and Earth</p>
+            <p class="chinese-text">二、中式婚礼誓言与传统 —— 天地为证的永恒之约</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">3. East vs. West — A Comparative Analysis of Wedding Cultures</p>
+            <p class="chinese-text">三、中西对比 —— 婚礼文化差异深度解析</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">4. Key Vocabulary — Essential Terms for Cross-Cultural Understanding</p>
+            <p class="chinese-text">四、重点词汇 —— 跨文化理解核心术语</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 3: 西方婚礼介绍 ========== -->
+<div class="slide western-slide">
+    <div class="content-box">
+        <span class="section-label">PART I · WESTERN</span>
+        <h2 class="slide-title">Western Wedding Traditions</h2>
+        <p class="slide-subtitle">西方婚礼传统</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">Western weddings trace their roots to ancient Greece and Rome, later shaped by Christian doctrine.</p>
+            <p class="chinese-text">西方婚礼起源于古希腊与古罗马，后受基督教教义深刻影响。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The ceremony is typically held in a church, symbolizing a sacred covenant between the couple and God.</p>
+            <p class="chinese-text">仪式通常在教堂举行，象征着新人与上帝之间的神圣契约。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The bride wears a white gown, a tradition established by Queen Victoria in 1840, symbolizing purity and innocence.</p>
+            <p class="chinese-text">新娘身着白色婚纱，这一传统始于1840年维多利亚女王，象征纯洁与无瑕。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The exchange of rings on the left hand represents eternal love, as the vein leads directly to the heart.</p>
+            <p class="chinese-text">左手无名指交换戒指代表永恒之爱，因该处血管直通心脏。</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 4: 西方婚礼誓言 ========== -->
+<div class="slide western-slide">
+    <div class="content-box">
+        <span class="section-label">PART I · VOWS</span>
+        <h2 class="slide-title">Traditional Western Wedding Vows</h2>
+        <p class="slide-subtitle">传统西方婚礼誓言</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">"I, [Name], take you, [Name], to be my lawfully wedded wife/husband."</p>
+            <p class="chinese-text">「我，[姓名]，愿娶/嫁你，[姓名]，为我合法的妻子/丈夫。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"To have and to hold from this day forward, for better, for worse."</p>
+            <p class="chinese-text">「从今天起，拥有你、珍惜你，无论顺境或逆境。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"For richer, for poorer, in sickness and in health."</p>
+            <p class="chinese-text">「无论富裕或贫穷，无论健康或疾病。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"To love and to cherish, till death do us part."</p>
+            <p class="chinese-text">「相爱相守，直至死亡将我们分离。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"According to God's holy ordinance, I pledge you my faith."</p>
+            <p class="chinese-text">「遵照上帝的神圣旨意，我向你许下我的忠诚。」</p>
+        </div>
+
+        <div class="ornament">✦ ✦ ✦</div>
+
+       <video controls width="700" style="border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+    <source src="western-wedding-clean.mp4" type="video/mp4">
+    您的浏览器不支持视频播放。
+</video>
+            <p class="video-label" style="font-size: 0.9rem; margin-top: 5px;"></p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 5: 中式婚礼介绍 ========== -->
+<div class="slide chinese-slide">
+    <div class="content-box">
+        <span class="section-label">PART II · CHINESE</span>
+        <h2 class="slide-title">Chinese Wedding Traditions</h2>
+        <p class="slide-subtitle">中式婚礼传统</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">Chinese weddings follow the ancient "Three Letters and Six Etiquettes" established in the Zhou Dynasty.</p>
+            <p class="chinese-text">中式婚礼遵循周代确立的「三书六礼」古制。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The color red dominates the ceremony, symbolizing joy, prosperity, and the warding off of evil spirits.</p>
+            <p class="chinese-text">红色贯穿整个仪式，象征喜庆、繁荣与驱邪避凶。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The bride wears a Qun Kua — a red embroidered dress with dragon and phoenix motifs representing harmony.</p>
+            <p class="chinese-text">新娘身着裙褂——绣有龙凤图案的红色嫁衣，象征阴阳和谐。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">The Tea Ceremony is central: the couple serves tea to elders, receiving blessings and red envelopes in return.</p>
+            <p class="chinese-text">敬茶仪式是核心环节：新人向长辈敬茶，回获祝福与红包。</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 6: 中式婚礼誓言 ========== -->
+<div class="slide chinese-slide">
+    <div class="content-box">
+        <span class="section-label">PART II · VOWS</span>
+        <h2 class="slide-title">Traditional Chinese Wedding Vows</h2>
+        <p class="slide-subtitle">中式婚礼誓言</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">"Today, before our parents and honored guests, I pledge to you with the Three Letters and Six Rites as my witness."</p>
+            <p class="chinese-text">「今日高堂在座，亲友见证，我以三书六礼为凭，凤冠霞帔为证，向你立誓。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"From this day forth, through spring and autumn, I shall shield you from wind and rain, and share every burden with you."</p>
+            <p class="chinese-text">「此后春秋相伴，不问寒暖，必当护你周全；柴米油盐，不怨琐碎，定要与你分担。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"I vow to honor Heaven and Earth, to revere our parents, and above all, to cherish you."</p>
+            <p class="chinese-text">「从此敬天地，敬高堂，更敬彼此。」</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">"Holding your hand, I shall not betray this life; growing old with you, I shall follow you into the next."</p>
+            <p class="chinese-text">「执子之手，当不负此生；与子偕老，必共赴来世。」</p>
+        </div>
+
+        <div class="ornament">❖ ❖ ❖</div>
+
+      
+    </div>
+</div>
+
+<!-- ========== SLIDE 7: 中西对比 ========== -->
+<div class="slide compare-slide">
+    <div class="content-box" style="max-width: 1200px;">
+        <span class="section-label">PART III · COMPARISON</span>
+        <h2 class="slide-title">East vs. West: A Cultural Comparison</h2>
+        <p class="slide-subtitle">中西婚礼文化对比</p>
+
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Aspect<br>维度</th>
+                    <th style="width: 40%;" class="western-col">Western Wedding<br>西方婚礼</th>
+                    <th style="width: 40%;" class="chinese-col">Chinese Wedding<br>中式婚礼</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="aspect">Ethical Foundation<br>伦理基础</td>
+                    <td class="western-col">Religious — covenant with God<br>宗教性——与上帝的契约</td>
+                    <td class="chinese-col">Secular — Confucian filial piety<br>世俗性——儒家孝道</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Core Color<br>核心色彩</td>
+                    <td class="western-col">White — purity and innocence<br>白色——纯洁与无瑕</td>
+                    <td class="chinese-col">Red — joy and prosperity<br>红色——喜庆与繁荣</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Focus<br>关注重心</td>
+                    <td class="western-col">Individualism — couple-centric<br>个人主义——以新人为中心</td>
+                    <td class="chinese-col">Collectivism — family union<br>集体主义——家族联姻</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Ceremony Venue<br>仪式场所</td>
+                    <td class="western-col">Church or outdoor venue<br>教堂或户外场地</td>
+                    <td class="chinese-col">Home or banquet hall<br>家中或宴会厅</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Key Ritual<br>核心仪式</td>
+                    <td class="western-col">Exchange of vows and rings<br>交换誓言与戒指</td>
+                    <td class="chinese-col">Tea ceremony and bowing<br>敬茶仪式与拜堂</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Witness<br>见证人</td>
+                    <td class="western-col">Priest / Officiant<br>牧师/主婚人</td>
+                    <td class="chinese-col">Parents and ancestors<br>父母与祖先</td>
+                </tr>
+                <tr>
+                    <td class="aspect">Marriage Purpose<br>婚姻目的</td>
+                    <td class="western-col">Love and companionship<br>爱情与陪伴</td>
+                    <td class="chinese-col">Family continuity and filial duty<br>传宗接代与孝道</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ========== SLIDE 8: 对比总结 ========== -->
+<div class="slide compare-slide">
+    <div class="content-box">
+        <span class="section-label">PART III · INSIGHTS</span>
+        <h2 class="slide-title">Shared Essence, Different Expressions</h2>
+        <p class="slide-subtitle">殊途同归：爱的不同表达</p>
+
+        <div class="bilingual-block">
+            <p class="english-text">Despite apparent differences, both traditions share the same essence: marking a new chapter of life with solemn commitment.</p>
+            <p class="chinese-text">尽管表面差异显著，两种传统本质相同：以庄严承诺开启人生新篇章。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">Western weddings emphasize romance and individual choice; Chinese weddings honor heritage and family bonds.</p>
+            <p class="chinese-text">西方婚礼强调浪漫与个人选择；中式婚礼尊崇传统与家族纽带。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">In the era of globalization, many couples now blend both styles — wearing white for the ceremony and red for the banquet.</p>
+            <p class="chinese-text">在全球化时代，许多新人融合两种风格——仪式穿白，宴席穿红。</p>
+        </div>
+
+        <div class="bilingual-block">
+            <p class="english-text">Ultimately, every wedding is a unique celebration of love that transcends cultural boundaries.</p>
+            <p class="chinese-text">归根结底，每场婚礼都是超越文化边界的独特爱之庆典。</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 9: 重点词汇 ========== -->
+<div class="slide compare-slide">
+    <div style="max-width: 1100px; width: 100%;">
+        <span class="section-label">PART IV · VOCABULARY</span>
+        <h2 class="slide-title">Key Vocabulary</h2>
+        <p class="slide-subtitle">重点词汇速查</p>
+
+        <div class="keywords-grid">
+            <div class="keyword-card">
+                <div class="keyword-en">Vow</div>
+                <div class="keyword-phonetic">/vaʊ/</div>
+                <div class="keyword-cn">誓言 / 誓约</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Covenant</div>
+                <div class="keyword-phonetic">/ˈkʌvənənt/</div>
+                <div class="keyword-cn">契约 / 盟约</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Bride / Groom</div>
+                <div class="keyword-phonetic">/braɪd/ /ɡruːm/</div>
+                <div class="keyword-cn">新娘 / 新郎</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Officiant</div>
+                <div class="keyword-phonetic">/əˈfɪʃənt/</div>
+                <div class="keyword-cn">主婚人 / 司仪</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Tea Ceremony</div>
+                <div class="keyword-phonetic">/tiː ˈserəməni/</div>
+                <div class="keyword-cn">敬茶仪式</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Betrothal</div>
+                <div class="keyword-phonetic">/bɪˈtrəʊðl/</div>
+                <div class="keyword-cn">订婚 / 聘礼</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Filial Piety</div>
+                <div class="keyword-phonetic">/ˈfɪliəl ˈpaɪəti/</div>
+                <div class="keyword-cn">孝道 / 孝心</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Auspicious</div>
+                <div class="keyword-phonetic">/ɔːˈspɪʃəs/</div>
+                <div class="keyword-cn">吉祥的 / 吉利的</div>
+            </div>
+
+            <div class="keyword-card">
+                <div class="keyword-en">Eternity</div>
+                <div class="keyword-phonetic">/ɪˈtɜːnəti/</div>
+                <div class="keyword-cn">永恒 / 来世</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 10: 结尾 ========== -->
+<div class="slide cover">
+    <div class="cover-content">
+        <div class="ornament">❦ ❦ ❦</div>
+        <h1 style="font-size: 3rem;">Thank You</h1>
+        <p class="subtitle" style="font-size: 1.5rem;">Love Knows No Borders</p>
+        <div class="divider"></div>
+        <p class="chinese-title" style="font-size: 2rem;">爱无国界</p>
+        <p style="margin-top: 30px; color: var(--gray); font-style: italic;">
+            "In all the world, there is no heart for me like yours.<br>
+            In all the world, there is no love for you like mine."
+        </p>
+        <p style="margin-top: 10px; color: var(--gray); font-size: 0.95rem;">
+            「世间万千，唯你之心为我所属；<br>
+            世间万千，唯我之爱为你所拥。」
+        </p>
+        <p class="date" style="margin-top: 50px;">— Maya Angelou</p>
+    </div>
+</div>
+
+<div class="nav-hint">Scroll down to view all slides ↓</div>
+
+<script>
+    // 生成飘飘然粒子
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+
+    // 隐藏导航提示
+    setTimeout(() => {
+        document.querySelector('.nav-hint').style.opacity = '0';
+    }, 5000);
+</script>
+
+</body>
+</html>
